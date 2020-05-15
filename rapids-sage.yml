@@ -1,0 +1,14 @@
+name: rapids-sage
+dependencies:
+        - python
+        - numpy
+        - pandas
+        - matplotlib
+        - jupyterlab
+        - pyyaml
+        - pip:
+            - sagemaker
+            - boto3
+
+
+

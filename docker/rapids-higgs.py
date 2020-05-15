@@ -33,14 +33,14 @@ def main(args):
         
     col_names = ['label'] + ["col-{}".format(i) for i in range(2, 30)] # Assign column names
     dtypes_ls = ['int32'] + ['float32' for _ in range(2, 30)] # Assign dtypes to each column
-    data = cudf.read_csv(data_dir+'HIGGS.csv', names=col_names, dtype=dtypes_ls)
+    data = cudf.read_csv(data_dir+'HIGGS.csv', names=col_names, dtype=dtypes_ls, nrows=1000000)
     
     X_train, X_test, y_train, y_test = train_test_split(data, 'label', train_size=0.70)
 
     cu_rf = cuRF(**hyperparams)
     cu_rf.fit(X_train, y_train)
 
-    print("test_acc:", accuracy_score(cu_rf.predict(X_test), y_test.to_gpu_array()))
+    print("test_acc:", accuracy_score(cu_rf.predict(X_test).to_gpu_array(), y_test.to_gpu_array()))
 
 if __name__ == "__main__":
     
